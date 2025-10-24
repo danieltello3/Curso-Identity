@@ -1,0 +1,12 @@
+﻿@page "/login"
+<div>
+    <h2 class="title">Iniciar Sesión</h2>
+    <EditForm Model="UserModel" OnValidSubmit="OnLogin">
+        <input type="text" class="input-field" placeholder="Ingrese usuario" @bind="UserModel.UserName" />
+        <input type="password" class="input-field" placeholder="Ingrese contraseña" @bind="UserModel.Password" />
+        <button type="submit" class="btn-submit">
+            <i class="bi bi-box-arrow-in-right"></i>
+            Iniciar sesión
+        </button>
+    </EditForm>
+</div>

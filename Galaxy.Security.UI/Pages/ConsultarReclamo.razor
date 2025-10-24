@@ -1,0 +1,31 @@
+﻿@page "/reclamo/consultar"
+@attribute [Authorize(Roles = "Customer")]
+@using Galaxy.Security.UI.Services
+@using Microsoft.AspNetCore.Components.Authorization
+@inject HttpClient http
+@inject IToastService ToastService
+<PageTitle>Consultar Reclamo</PageTitle>
+
+<div class="container">
+    <h3>Consultar Reclamo</h3>
+    <EditForm Model="ReclamoModel" OnValidSubmit="OnConsultarReclamo" class="edit-form">
+        <input type="text" class="input-field" placeholder="Ingrese el codigo" @bind="ReclamoModel.Codigo" />
+        <div class="button-group">
+            <button type="submit" class="btn-submit">
+                Consultar
+            </button>
+            <button type="button" class="btn-secondary" @onclick="GoToMenu">
+                Regresar
+            </button>
+        </div>
+    </EditForm>
+
+    @if (ReclamoModel.Resultado != null)
+    {
+        <div class="reclamo-result">
+            <h3><strong>Reclamo @ReclamoModel.Resultado.Codigo</strong></h3>
+            <p><strong>Motivo:</strong> @ReclamoModel.Resultado.Descripcion</p>
+            <p><strong>Fecha:</strong> @ReclamoModel.Resultado.Fecha</p>
+        </div>
+    }
+</div>

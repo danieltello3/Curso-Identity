@@ -1,0 +1,25 @@
+﻿@page "/reclamo/nuevo"
+@attribute [Authorize(Roles = "Manager")]
+@using Galaxy.Security.UI.Services
+@using Microsoft.AspNetCore.Components.Authorization
+@inject HttpClient http
+@inject IToastService ToastService
+<PageTitle>Registro Reclamo</PageTitle>
+
+<div class="container">
+    <h3>Registrar Nuevo Reclamo</h3>
+    <EditForm Model="ReclamoModel" OnValidSubmit="OnRegistrarReclamo">
+        <input type="text" class="input-field" placeholder="Ingrese descripcion" @bind="ReclamoModel.Descripcion" />
+        <input type="date" class="date-field" placeholder="Seleccione fecha" @bind="ReclamoModel.Fecha" />
+        <button type="submit" class="btn-submit">
+            <i class="bi bi-box-arrow-in-right"></i>
+            Registrar
+        </button>
+        <br />
+        <br />
+        <button type="button" class="btn-secondary" @onclick="GoToMenu">
+            <i class="bi bi-box-arrow-in-right"></i>
+            Regresar
+        </button>
+    </EditForm>
+</div>

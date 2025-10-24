@@ -1,0 +1,68 @@
+﻿@page "/"
+@using Galaxy.Security.UI.Services
+@using Microsoft.AspNetCore.Components.Authorization
+@attribute [Authorize]
+@inject HttpClient http
+@inject AuthenticationStateProvider Auth
+@inject NavigationManager Navegador
+@inject IToastService ToastService
+<PageTitle>Home</PageTitle>
+
+<div class="container">
+    <div class="nav-container">
+        <div class="btn-logout" @onclick="CerrarSesion">
+            <i class="bi bi-door-open"></i>
+            <span>Cerrar Sesión</span>
+        </div>
+    </div>
+    <h2>Bienvenido al Sistema de Gestión de Reclamos</h2>
+    <div class="button-container">
+        @if (isManager)
+        {
+            <div class="btn" @onclick="GoToRegistroReclamo">
+                <span>Registrar Reclamo</span>
+            </div>
+        }
+        @if (isCustomer)
+        {
+            <div class="btn" @onclick="GoToConsultarReclamo">
+                <span>Consultar Reclamo</span>
+            </div>
+        }
+
+    </div>
+</div>
+
+@code {
+
+    private bool isManager = false;
+    private bool isCustomer = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await Auth.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        isManager = user.IsInRole("Manager");
+        isCustomer = user.IsInRole("Customer");
+    }
+
+    public void GoToRegistroUsuario() => Navegador.NavigateTo("/usuario/nuevo");
+    public void GoToRegistroReclamo() => Navegador.NavigateTo("/reclamo/nuevo");
+    public void GoToConsultarReclamo() => Navegador.NavigateTo("/reclamo/consultar");
+
+    public async Task CerrarSesion()
+    {
+        try
+        {
+            var authService = (AuthenticationService)Auth;
+            await authService.Logout();
+            Navegador.NavigateTo("/");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error en inicio de sesión: {ex.Message}");
+            ToastService.ShowError("Ocurrió un error inesperado al iniciar sesión.");
+        }
+    }
+}

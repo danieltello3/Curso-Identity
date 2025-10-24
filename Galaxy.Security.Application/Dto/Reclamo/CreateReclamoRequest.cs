@@ -8,7 +8,5 @@ namespace Galaxy.Security.Application.Dto.Reclamo
         public string Descripcion { get; set; }
         [Required(ErrorMessage = "El campo Fecha es obligatorio")]
         public DateTime Fecha { get; set; }
-        [Required(ErrorMessage = "El campo EmailCustomer es obligatorio")]
-        public string EmailCustomer { get; set; }
     }
 }

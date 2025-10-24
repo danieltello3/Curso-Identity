@@ -7,8 +7,7 @@ namespace Galaxy.Security.Infraestructure.Configurations.Context
     {
         public IdentityDbContext CreateDbContext(string[] args)
         {
-            var devConnectionString = "Host=localhost;Port=1601;Database=security_db;Username=admin;Password=Password2025";
-            var connectionString = Environment.GetEnvironmentVariable("SecurityDb") ?? devConnectionString;
+            var connectionString = Environment.GetEnvironmentVariable("SecurityDb");
 
             var optionsBuilder = new DbContextOptionsBuilder<IdentityDbContext>();
 
